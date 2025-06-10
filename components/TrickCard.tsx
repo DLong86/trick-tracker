@@ -1,5 +1,13 @@
+import { Colors } from "@/constants/Colors";
 import React from "react";
-import { Button, Linking, StyleSheet, Switch, Text, View } from "react-native";
+import {
+	Linking,
+	StyleSheet,
+	Switch,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import type { Trick } from "../types/Trick";
 
 type Props = {
@@ -29,17 +37,19 @@ export default function TrickCard({ trick, setTricks, tricks }: Props) {
 				</Text>
 			) : null}
 			<View style={styles.row}>
-				<Text>Attempted</Text>
+				<Text style={styles.switchLabel}>Attempted</Text>
 				<Switch
 					value={trick.attempted}
 					onValueChange={() => toggle("attempted")}
 				/>
 			</View>
 			<View style={styles.row}>
-				<Text>Landed</Text>
+				<Text style={styles.switchLabel}>Landed</Text>
 				<Switch value={trick.landed} onValueChange={() => toggle("landed")} />
 			</View>
-			<Button title="Delete" color="red" onPress={deleteTrick} />
+			<TouchableOpacity style={styles.deleteButton} onPress={deleteTrick}>
+				<Text style={styles.deleteButtonText}>Delete</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
@@ -47,26 +57,59 @@ export default function TrickCard({ trick, setTricks, tricks }: Props) {
 const styles = StyleSheet.create({
 	card: {
 		padding: 16,
-		backgroundColor: "#fdfdfd",
-		borderRadius: 8,
+		backgroundColor: "#fefae0", // paper yellow
+		borderRadius: 12,
 		marginBottom: 16,
-		elevation: 2,
+		borderWidth: 2,
+		borderColor: "#000", // bold black border
+		shadowColor: "#000",
+		shadowOffset: { width: 2, height: 2 },
+		shadowOpacity: 0.3,
+		shadowRadius: 4,
 	},
+
 	landed: {
-		backgroundColor: "#d4edda", // light green
+		backgroundColor: Colors.light.accent2, // light green when landed
 	},
+
 	title: {
-		fontSize: 18,
-		fontWeight: "bold",
+		fontFamily: "PermanentMarker",
+		fontSize: 20,
+		color: "#222",
+		marginBottom: 8,
 	},
+
 	link: {
-		color: "#007bff",
+		fontFamily: "SpaceMono",
+		color: "#00ffff", // aqua
 		textDecorationLine: "underline",
 		marginVertical: 8,
 	},
+
 	row: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		marginVertical: 4,
+		alignItems: "center",
+		marginVertical: 6,
+	},
+
+	switchLabel: {
+		fontFamily: "GloriaHallelujah",
+		color: "#222",
+		fontSize: 16,
+	},
+
+	deleteButton: {
+		marginTop: 10,
+		backgroundColor: "#ff69b4", // hot pink
+		borderRadius: 8,
+		padding: 10,
+		alignItems: "center",
+	},
+
+	deleteButtonText: {
+		color: "#000",
+		fontFamily: "SpaceMono",
+		fontWeight: "bold",
 	},
 });
