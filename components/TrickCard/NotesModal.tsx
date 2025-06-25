@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import React, { useEffect, useState } from "react";
 import {
 	ImageBackground,
@@ -30,8 +31,14 @@ export default function NoteModal({
 		<Modal visible={visible} transparent animationType="fade">
 			<View style={styles.overlay}>
 				<ImageBackground
-					source={require("../assets/images/stardust.png")}
+					source={require("../../assets/images/lined-paper-2.png")}
 					style={styles.modal}
+					imageStyle={{
+						resizeMode: "stretch",
+						width: "full",
+						height: "100%",
+						// borderRadius: 10,
+					}}
 				>
 					{/* <Text style={styles.title}>Notes</Text> */}
 					<TextInput
@@ -44,12 +51,12 @@ export default function NoteModal({
 						placeholderTextColor={"#666"}
 					/>
 					<View style={styles.buttonRow}>
-						<TouchableOpacity onPress={onClose} style={styles.button}>
+						<TouchableOpacity onPress={onClose} style={styles.buttonCancel}>
 							<Text style={styles.buttonText}>cancel</Text>
 						</TouchableOpacity>
 						<TouchableOpacity
 							onPress={() => onSave(note)}
-							style={styles.button}
+							style={styles.buttonSave}
 						>
 							<Text style={styles.buttonText}>save</Text>
 						</TouchableOpacity>
@@ -72,6 +79,7 @@ const styles = StyleSheet.create({
 		padding: 10,
 		borderRadius: 10,
 		width: "80%",
+		overflow: "hidden",
 	},
 	title: {
 		fontSize: 22,
@@ -79,11 +87,10 @@ const styles = StyleSheet.create({
 		fontFamily: "PermanentMarker",
 	},
 	input: {
-		// borderColor: "#222",
-		// borderWidth: 2,
 		padding: 10,
 		borderRadius: 6,
 		minHeight: 200,
+		fontSize: 16,
 		textAlignVertical: "top",
 		fontFamily: "GloriaHallelujah",
 	},
@@ -94,13 +101,25 @@ const styles = StyleSheet.create({
 		gap: 10,
 		margin: 10,
 	},
-	button: {
+	buttonSave: {
+		borderWidth: 1,
+		borderColor: "#222",
+		backgroundColor: Colors.light.accent3,
+		borderRadius: 6,
+		padding: 2,
+		paddingHorizontal: 10,
+		// marginRight: 6,
+		flexDirection: "row",
+		alignItems: "center",
+	},
+
+	buttonCancel: {
 		borderWidth: 1,
 		borderColor: "#222",
 		borderRadius: 6,
 		padding: 2,
 		paddingHorizontal: 10,
-		// marginRight: 6,
+		backgroundColor: Colors.light.accent2,
 		flexDirection: "row",
 		alignItems: "center",
 	},

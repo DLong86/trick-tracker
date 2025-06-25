@@ -1,107 +1,38 @@
 import { Colors } from "@/constants/Colors";
-import { Stack } from "expo-router";
-import { useEffect, useState } from "react";
+import { Stack, useRouter } from "expo-router";
+import React from "react";
 import {
 	Image,
 	ImageBackground,
-	ScrollView,
 	StyleSheet,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	View,
 } from "react-native";
-import TrickCard from "../components/TrickCard";
-import type { Trick } from "../types/Trick";
-import { loadTricks, saveTricks } from "../utils/storage";
 
-export default function IndexScreen() {
-	const [tricks, setTricks] = useState<Trick[]>([]);
-	const [text, setText] = useState("");
-	const [videoLink, setVideoLink] = useState("");
-
-	// useEffect(() => {
-	// 	StatusBar.style("dark-content");
-	// }, []);
-
-	// load tricks when starting the app
-	useEffect(() => {
-		(async () => {
-			const savedTricks = await loadTricks();
-			setTricks(savedTricks);
-		})();
-	}, []);
-
-	// save tricks when there is a change
-	useEffect(() => {
-		saveTricks(tricks);
-	}, [tricks]);
-
-	const addTrick = () => {
-		if (text.trim() === "") return;
-		setTricks([
-			...tricks,
-			{
-				id: Date.now(),
-				name: text,
-				video: videoLink,
-				attempted: false,
-				landed: false,
-				progress: "not started",
-				dateAdded: new Date().toISOString(),
-				// tilt: (Math.random() * 4 - 2).toFixed(1),
-			},
-		]);
-		setText("");
-		setVideoLink("");
-	};
+export default function HomeScreen() {
+	const router = useRouter();
 
 	return (
 		<ImageBackground
 			source={require("../assets/images/stardust.png")}
 			style={styles.background}
 		>
-			{/* <StatusBar style="dark" backgroundColor={Colors.light.background} /> */}
-			<ScrollView contentContainerStyle={styles.container}>
-				<Stack.Screen options={{ headerShown: false }} />
-				<View style={styles.customHeader}>
-					<Text style={styles.headerTitle}>Trick Tracker</Text>
-				</View>
-				{/* <Text style={styles.title}>Trick Tracker</Text> */}
-
-				<TextInput
-					placeholder="Trick Name"
-					value={text}
-					onChangeText={setText}
-					style={styles.input}
-					placeholderTextColor={"#666"}
-				/>
-				<TextInput
-					placeholder="Video URL"
-					value={videoLink}
-					onChangeText={setVideoLink}
-					style={styles.input}
-					placeholderTextColor={"#666"}
-				/>
-				<TouchableOpacity style={styles.button} onPress={addTrick}>
-					{/* <Text style={styles.buttonText}>Add Trick</Text> */}
-					<View style={styles.buttonContent}>
-						<Text style={styles.buttonText}>Add Trick</Text>
+			<Stack.Screen options={{ headerShown: false }} />
+			<View style={styles.container}>
+				<TouchableOpacity onPress={() => router.push("/trickTracker")}>
+					<View style={styles.tappableContent}>
 						<Image
-							source={require("../assets/images/plus-hand-drawn-sign.png")}
+							source={require("../assets/images/skull.png")}
 							style={styles.icon}
 						/>
+						<Text style={styles.title}>Trick Tracker</Text>
 					</View>
 				</TouchableOpacity>
-				{tricks.map((trick) => (
-					<TrickCard
-						key={trick.id}
-						trick={trick}
-						tricks={tricks}
-						setTricks={setTricks}
-					/>
-				))}
-			</ScrollView>
+				<TouchableOpacity onPress={() => router.push("/trickTracker")}>
+					<Text style={styles.enterText}>enter</Text>
+				</TouchableOpacity>
+			</View>
 		</ImageBackground>
 	);
 }
@@ -110,62 +41,33 @@ const styles = StyleSheet.create({
 	background: {
 		flex: 1,
 		resizeMode: "cover",
-		backgroundColor: Colors.light.background,
+		backgroundColor: Colors.light.accent3,
 	},
 	container: {
-		flexGrow: 1,
-		padding: 16,
-		// backgroundColor: Colors.light.background,
-	},
-	customHeader: {
-		// backgroundColor: Colors.light.background,
-		paddingTop: 4,
-		paddingBottom: 10,
-		fontSize: 28,
-	},
-	headerTitle: {
-		fontFamily: "PermanentMarker",
-		fontSize: 30,
-		color: Colors.light.text,
-		transform: [{ rotate: `${Math.random() * 2 - 2}deg` }],
-	},
-
-	title: {
-		fontFamily: "PermanentMarker",
-		fontSize: 28,
-		marginBottom: 16,
-		color: Colors.light.text,
-	},
-	button: {
-		backgroundColor: Colors.light.accent1,
-		padding: 12,
-		borderRadius: 8,
+		flex: 1,
 		alignItems: "center",
-		marginBottom: 20,
+		justifyContent: "center",
+		// backgroundColor: "#fafabe",
 	},
-	buttonText: {
-		fontFamily: "GloriaHallelujah",
-		fontWeight: "bold",
-		fontSize: 16,
-		color: "#222",
-	},
-	input: {
-		borderWidth: 2,
-		borderColor: Colors.light.icon,
-		backgroundColor: Colors.light.accent3,
-		color: "#222",
-		padding: 10,
-		marginBottom: 10,
-		borderRadius: 6,
-		fontFamily: "GloriaHallelujah",
-	},
-	buttonContent: {
-		flexDirection: "row",
+	tappableContent: {
 		alignItems: "center",
 	},
 	icon: {
-		width: 20,
-		height: 20,
-		marginLeft: 8,
+		width: 100,
+		height: 100,
+		marginBottom: 20,
+	},
+	title: {
+		fontFamily: "PermanentMarker",
+		fontSize: 36,
+		marginBottom: 10,
+		color: "#222",
+		// color: Colors.light.accent1,
+	},
+	enterText: {
+		fontFamily: "GloriaHallelujah",
+		fontSize: 22,
+		// marginBottom: 20,
+		color: Colors.light.accent1,
 	},
 });
