@@ -43,7 +43,7 @@ export default function ExpandableContent({
 	return (
 		<>
 			<View style={styles.divider} />
-			{/* <Text>Status:</Text> */}
+
 			<ScrollView
 				horizontal
 				showsHorizontalScrollIndicator={false}
@@ -118,12 +118,6 @@ const styles = StyleSheet.create({
 		marginVertical: 6,
 	},
 
-	// switchLabel: {
-	// 	fontFamily: "GloriaHallelujah",
-	// 	color: "#222",
-	// 	fontSize: 16,
-	// },
-
 	notes: {
 		flexDirection: "row",
 		alignSelf: "flex-start",
@@ -153,11 +147,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 
-	// statusOptions: {
-	// 	flexDirection: "row",
-	// 	// justifyContent: "space-between",
-	// 	marginVertical: 8,
-	// },
 	progressScroll: {
 		flexDirection: "row",
 		marginVertical: 8,

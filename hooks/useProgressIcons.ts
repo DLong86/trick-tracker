@@ -2,7 +2,7 @@ import { Trick } from "../types/Trick";
 
 const useProgressIcons = () => {
 	return {
-		"not started": require("../assets/images/idea.png"),
+		"not started": require("../assets/images/new.png"),
 		attempted: require("../assets/images/flash.png"),
 		trying: require("../assets/images/cone.png"),
 		landed: require("../assets/images/bomb.png"),

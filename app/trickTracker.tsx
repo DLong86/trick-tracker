@@ -3,15 +3,13 @@ import { Stack } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import {
 	Animated,
-	Image,
 	ImageBackground,
 	ScrollView,
 	StyleSheet,
 	Text,
-	TextInput,
-	TouchableOpacity,
 	View,
 } from "react-native";
+import AddTrickSection from "../components/addTrick/AddTrickSection";
 import TrickCard from "../components/TrickCard/TrickCard";
 import type { Trick } from "../types/Trick";
 import { loadTricks, saveTricks } from "../utils/storage";
@@ -21,6 +19,7 @@ export default function TrickTracker() {
 	const [text, setText] = useState("");
 	const [videoLink, setVideoLink] = useState("");
 	const fadeAnim = useRef(new Animated.Value(0)).current;
+	const [searchQuery, setSearchQuery] = useState("");
 
 	useEffect(() => {
 		Animated.timing(fadeAnim, {
@@ -66,6 +65,10 @@ export default function TrickTracker() {
 		setVideoLink("");
 	};
 
+	const filteredTricks = tricks.filter((trick) =>
+		trick.name.toLowerCase().includes(searchQuery.toLowerCase())
+	);
+
 	return (
 		<ImageBackground
 			source={require("../assets/images/stardust.png")}
@@ -80,31 +83,26 @@ export default function TrickTracker() {
 					</View>
 					{/* <Text style={styles.title}>Trick Tracker</Text> */}
 
-					<TextInput
-						placeholder="Trick Name"
-						value={text}
-						onChangeText={setText}
-						style={styles.input}
-						placeholderTextColor={"#666"}
+					<AddTrickSection
+						searchQuery={searchQuery}
+						setSearchQuery={setSearchQuery}
+						onAddTrick={(name, video) => {
+							setTricks([
+								...tricks,
+								{
+									id: Date.now(),
+									name,
+									video,
+									attempted: false,
+									landed: false,
+									progress: "not started",
+									dateAdded: new Date().toISOString(),
+								},
+							]);
+						}}
 					/>
-					<TextInput
-						placeholder="Video URL"
-						value={videoLink}
-						onChangeText={setVideoLink}
-						style={styles.input}
-						placeholderTextColor={"#666"}
-					/>
-					<TouchableOpacity style={styles.button} onPress={addTrick}>
-						{/* <Text style={styles.buttonText}>Add Trick</Text> */}
-						<View style={styles.buttonContent}>
-							<Text style={styles.buttonText}>Add Trick</Text>
-							<Image
-								source={require("../assets/images/plus-hand-drawn-sign.png")}
-								style={styles.icon}
-							/>
-						</View>
-					</TouchableOpacity>
-					{tricks.map((trick) => (
+
+					{filteredTricks.map((trick) => (
 						<TrickCard
 							key={trick.id}
 							trick={trick}
@@ -139,45 +137,45 @@ const styles = StyleSheet.create({
 		fontFamily: "PermanentMarker",
 		fontSize: 30,
 		color: Colors.light.text,
-		transform: [{ rotate: `${Math.random() * 2 - 2}deg` }],
+		transform: [{ rotate: "-2deg" }],
 	},
 
-	title: {
-		fontFamily: "PermanentMarker",
-		fontSize: 28,
-		marginBottom: 16,
-		color: Colors.light.text,
-	},
-	button: {
-		backgroundColor: Colors.light.accent1,
-		padding: 12,
-		borderRadius: 8,
-		alignItems: "center",
-		marginBottom: 20,
-	},
-	buttonText: {
-		fontFamily: "GloriaHallelujah",
-		fontWeight: "bold",
-		fontSize: 16,
-		color: "#222",
-	},
-	input: {
-		borderWidth: 2,
-		borderColor: Colors.light.icon,
-		backgroundColor: Colors.light.accent3,
-		color: "#222",
-		padding: 10,
-		marginBottom: 10,
-		borderRadius: 6,
-		fontFamily: "GloriaHallelujah",
-	},
-	buttonContent: {
-		flexDirection: "row",
-		alignItems: "center",
-	},
-	icon: {
-		width: 20,
-		height: 20,
-		marginLeft: 8,
-	},
+	// title: {
+	// 	fontFamily: "PermanentMarker",
+	// 	fontSize: 28,
+	// 	marginBottom: 16,
+	// 	color: Colors.light.text,
+	// },
+	// button: {
+	// 	backgroundColor: Colors.light.accent1,
+	// 	padding: 12,
+	// 	borderRadius: 8,
+	// 	alignItems: "center",
+	// 	marginBottom: 20,
+	// },
+	// buttonText: {
+	// 	fontFamily: "GloriaHallelujah",
+	// 	fontWeight: "bold",
+	// 	fontSize: 16,
+	// 	color: "#222",
+	// },
+	// input: {
+	// 	borderWidth: 2,
+	// 	borderColor: Colors.light.icon,
+	// 	backgroundColor: Colors.light.accent3,
+	// 	color: "#222",
+	// 	padding: 10,
+	// 	marginBottom: 10,
+	// 	borderRadius: 6,
+	// 	fontFamily: "GloriaHallelujah",
+	// },
+	// buttonContent: {
+	// 	flexDirection: "row",
+	// 	alignItems: "center",
+	// },
+	// icon: {
+	// 	width: 20,
+	// 	height: 20,
+	// 	marginLeft: 8,
+	// },
 });

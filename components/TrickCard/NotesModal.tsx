@@ -34,7 +34,7 @@ export default function NoteModal({
 					source={require("../../assets/images/lined-paper-2.png")}
 					style={styles.modal}
 					imageStyle={{
-						resizeMode: "stretch",
+						resizeMode: "cover",
 						width: "full",
 						height: "100%",
 						// borderRadius: 10,
