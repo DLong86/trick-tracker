@@ -22,6 +22,7 @@ const progressIcons: { [key in Trick["progress"]]: any } = {
 export default function TrickCard({ trick, setTricks, tricks }: Props) {
 	const [expanded, setExpanded] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+
 	const scaleAnim = useRef(new Animated.Value(1)).current;
 
 	// Animate on progress change
@@ -62,6 +63,13 @@ export default function TrickCard({ trick, setTricks, tricks }: Props) {
 		setShowModal(false);
 	};
 
+	const saveVideo = (video: string) => {
+		const updated = tricks.map((t) =>
+			t.id === trick.id ? { ...t, video } : t
+		);
+		setTricks(updated);
+	};
+
 	const deleteTrick = () => {
 		setTricks(tricks.filter((t) => t.id !== trick.id));
 	};
@@ -86,6 +94,7 @@ export default function TrickCard({ trick, setTricks, tricks }: Props) {
 						setShowModal={setShowModal}
 						showModal={showModal}
 						saveNote={saveNote}
+						saveVideo={saveVideo}
 					/>
 				)}
 			</View>

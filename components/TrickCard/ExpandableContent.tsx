@@ -1,7 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import useProgressIcons from "@/hooks/useProgressIcons";
 import type { Trick } from "@/types/Trick";
-import React from "react";
+import React, { useState } from "react";
 import {
 	Image,
 	ScrollView,
@@ -10,6 +10,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
+import EditModal from "./EditModal";
 import NoteModal from "./NotesModal";
 
 export default function ExpandableContent({
@@ -19,6 +20,7 @@ export default function ExpandableContent({
 	showModal,
 	setShowModal,
 	saveNote,
+	saveVideo,
 }: {
 	trick: Trick;
 	tricks: Trick[];
@@ -26,7 +28,9 @@ export default function ExpandableContent({
 	showModal: boolean;
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 	saveNote: (note: string) => void;
+	saveVideo: (video: string) => void;
 }) {
+	const [showEditModal, setShowEditModal] = useState(false);
 	const updateProgress = (newStatus: Trick["progress"]) => {
 		const updated = tricks.map((t) =>
 			t.id === trick.id ? { ...t, progress: newStatus } : t
@@ -72,19 +76,50 @@ export default function ExpandableContent({
 				))}
 			</ScrollView>
 
-			<TouchableOpacity onPress={() => setShowModal(true)} style={styles.notes}>
-				<Image
-					source={require("../../assets/images/notes.png")}
-					style={styles.icon}
-				/>
-				<Text style={styles.notesText}>notes</Text>
-			</TouchableOpacity>
+			<View style={styles.modalButtons}>
+				<TouchableOpacity
+					onPress={() => setShowModal(true)}
+					style={styles.notes}
+				>
+					<Image
+						source={require("../../assets/images/notes.png")}
+						style={styles.icon}
+					/>
+					<Text style={styles.notesText}>notes</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.notes}
+					onPress={() => setShowEditModal(true)}
+				>
+					<Image
+						source={require("../../assets/images/spanner.png")}
+						style={styles.icon}
+					/>
+					<Text style={styles.notesText}>edit</Text>
+				</TouchableOpacity>
+			</View>
 
 			<NoteModal
 				visible={showModal}
 				onClose={() => setShowModal(false)}
 				onSave={saveNote}
 				initialNote={trick.notes}
+			/>
+
+			<EditModal
+				visible={showEditModal}
+				onClose={() => setShowEditModal(false)}
+				initialName={trick.name}
+				initialVideo={trick.video}
+				onSave={(updatedName, updatedVideo) => {
+					const updated = tricks.map((t) =>
+						t.id === trick.id
+							? { ...t, name: updatedName, video: updatedVideo }
+							: t
+					);
+					setTricks(updated);
+					setShowEditModal(false);
+				}}
 			/>
 
 			<TouchableOpacity style={styles.deleteButton} onPress={deleteTrick}>
@@ -191,5 +226,12 @@ const styles = StyleSheet.create({
 	linkIcon: {
 		width: 20,
 		height: 20,
+	},
+
+	modalButtons: {
+		flexDirection: "row",
+		// justifyContent: "space-between",
+		gap: 6,
+		alignItems: "center",
 	},
 });
