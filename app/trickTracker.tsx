@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/Colors";
+import { useFocusEffect } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
 	Animated,
 	ImageBackground,
@@ -34,12 +35,17 @@ export default function TrickTracker() {
 	// }, []);
 
 	// load tricks when starting the app
-	useEffect(() => {
-		(async () => {
-			const savedTricks = await loadTricks();
-			setTricks(savedTricks);
-		})();
-	}, []);
+	useFocusEffect(
+		useCallback(() => {
+			console.log("TrickTracker focused");
+
+			const fetchTricks = async () => {
+				const savedTricks = await loadTricks();
+				setTricks(savedTricks);
+			};
+			fetchTricks();
+		}, [])
+	);
 
 	// save tricks when there is a change
 	useEffect(() => {
@@ -54,8 +60,8 @@ export default function TrickTracker() {
 				id: Date.now(),
 				name: text,
 				video: videoLink,
-				attempted: false,
-				landed: false,
+				// attempted: false,
+				// landed: false,
 				progress: "not started",
 				dateAdded: new Date().toISOString(),
 				// tilt: (Math.random() * 4 - 2).toFixed(1),
@@ -93,8 +99,8 @@ export default function TrickTracker() {
 									id: Date.now(),
 									name,
 									video,
-									attempted: false,
-									landed: false,
+									// attempted: false,
+									// landed: false,
 									progress: "not started",
 									dateAdded: new Date().toISOString(),
 								},

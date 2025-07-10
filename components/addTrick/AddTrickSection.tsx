@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/Colors";
+import { useRouter } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
 	Animated,
@@ -6,7 +7,6 @@ import {
 	Image,
 	StyleSheet,
 	Text,
-	TextInput,
 	TouchableOpacity,
 	View,
 } from "react-native";
@@ -21,9 +21,10 @@ export default function AddTrickSection({
 	searchQuery: string;
 	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 }) {
+	const router = useRouter();
 	const [visible, setVisible] = useState(false);
-	const [text, setText] = useState("");
-	const [videoLink, setVideoLink] = useState("");
+	// const [text, setText] = useState("");
+	// const [videoLink, setVideoLink] = useState("");
 
 	const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -39,16 +40,16 @@ export default function AddTrickSection({
 
 	const inputHeight = slideAnim.interpolate({
 		inputRange: [0, 1],
-		outputRange: [0, 240], // Adjust this if you add more content
+		outputRange: [0, 120], // Adjust this if you add more content
 	});
 
-	const handleAdd = () => {
-		if (text.trim()) {
-			onAddTrick(text, videoLink);
-			setText("");
-			setVideoLink("");
-		}
-	};
+	// const handleAdd = () => {
+	// 	if (text.trim()) {
+	// 		onAddTrick(text, videoLink);
+	// 		setText("");
+	// 		setVideoLink("");
+	// 	}
+	// };
 
 	return (
 		<View style={styles.container}>
@@ -76,7 +77,7 @@ export default function AddTrickSection({
 			</TouchableOpacity>
 
 			<Animated.View style={[styles.inner, { height: inputHeight }]}>
-				<TextInput
+				{/* <TextInput
 					placeholder="Trick Name"
 					value={text}
 					onChangeText={setText}
@@ -89,15 +90,18 @@ export default function AddTrickSection({
 					onChangeText={setVideoLink}
 					style={styles.input}
 					placeholderTextColor={"#666"}
-				/>
+				/> */}
 
-				<TouchableOpacity style={styles.addButton} onPress={handleAdd}>
+				<TouchableOpacity
+					style={styles.addButton}
+					onPress={() => router.push("/addTrick")}
+				>
 					<View style={styles.buttonContent}>
-						<Text style={styles.addButtonText}>add trick</Text>
-						<Image
-							source={require("../../assets/images/plus-hand-drawn-sign.png")}
+						<Text style={styles.addButtonText}>add a trick</Text>
+						{/* <Image
+							source={require("../../assets/images/right-arrow.png")}
 							style={styles.icon}
-						/>
+						/> */}
 					</View>
 				</TouchableOpacity>
 				<SlidingSearch

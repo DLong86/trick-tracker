@@ -5,6 +5,7 @@ export const Colors = {
 	light: {
 		text: "#222222", // crayon-like black
 		background: "#fefae0", // paper yellow (corrected hex)
+		background2: "#E0BBE4", // soft dreamy purple
 		tint: tintColorLight, // hot pink
 		icon: "#000000", // black for icons/borders
 		tabIconDefault: "#000000",
