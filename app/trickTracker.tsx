@@ -21,6 +21,10 @@ export default function TrickTracker() {
 	const [videoLink, setVideoLink] = useState("");
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 	const [searchQuery, setSearchQuery] = useState("");
+	const [showFocusedOnly, setShowFocusedOnly] = useState(false);
+	// const [sortBy, setSortBy] = useState<
+	// 	"dateAsc" | "dateDesc" | "nameAsc" | "nameDesc"
+	// >("dateDesc");
 
 	useEffect(() => {
 		Animated.timing(fadeAnim, {
@@ -30,11 +34,6 @@ export default function TrickTracker() {
 		}).start();
 	}, []);
 
-	// useEffect(() => {
-	// 	StatusBar.style("dark-content");
-	// }, []);
-
-	// load tricks when starting the app
 	useFocusEffect(
 		useCallback(() => {
 			console.log("TrickTracker focused");
@@ -71,9 +70,31 @@ export default function TrickTracker() {
 		setVideoLink("");
 	};
 
-	const filteredTricks = tricks.filter((trick) =>
-		trick.name.toLowerCase().includes(searchQuery.toLowerCase())
+	const filteredTricks = tricks.filter(
+		(trick) =>
+			trick.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+			(!showFocusedOnly || trick.focused)
 	);
+	// .sort((a, b) => {
+	// 	if (sortBy === "dateAsc")
+	// 		return (
+	// 			new Date(a.dateAdded).getTime() - new Date(b.dateAdded).getTime()
+	// 		);
+	// 	if (sortBy === "dateDesc")
+	// 		return (
+	// 			new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+	// 		);
+	// 	if (sortBy === "nameAsc") return a.name.localeCompare(b.name);
+	// 	if (sortBy === "nameDesc") return b.name.localeCompare(a.name);
+	// 	return 0;
+	// });
+
+	const toggleFocus = (id: number) => {
+		const updatedTricks = tricks.map((t) =>
+			t.id === id ? { ...t, focused: !t.focused } : t
+		);
+		setTricks(updatedTricks);
+	};
 
 	return (
 		<ImageBackground
@@ -92,6 +113,10 @@ export default function TrickTracker() {
 					<AddTrickSection
 						searchQuery={searchQuery}
 						setSearchQuery={setSearchQuery}
+						showFocusedOnly={showFocusedOnly}
+						setShowFocusedOnly={setShowFocusedOnly}
+						// sortBy={sortBy}
+						// setSortBy={setSortBy}
 						onAddTrick={(name, video) => {
 							setTricks([
 								...tricks,
@@ -99,10 +124,9 @@ export default function TrickTracker() {
 									id: Date.now(),
 									name,
 									video,
-									// attempted: false,
-									// landed: false,
 									progress: "not started",
 									dateAdded: new Date().toISOString(),
+									focused: false,
 								},
 							]);
 						}}
@@ -114,6 +138,7 @@ export default function TrickTracker() {
 							trick={trick}
 							tricks={tricks}
 							setTricks={setTricks}
+							toggleFocus={toggleFocus}
 						/>
 					))}
 				</ScrollView>

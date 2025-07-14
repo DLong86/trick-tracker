@@ -47,6 +47,9 @@ export default function ExpandableContent({
 	return (
 		<>
 			<View style={styles.divider} />
+			<Text style={styles.dateText}>
+				Added: {new Date(trick.dateAdded).toLocaleDateString()}
+			</Text>
 
 			<ScrollView
 				horizontal
@@ -137,8 +140,9 @@ export default function ExpandableContent({
 
 const styles = StyleSheet.create({
 	divider: {
-		marginVertical: 8,
+		marginVertical: 6,
 	},
+	dateText: { fontFamily: "SpaceMono", fontSize: 12, marginBottom: 12 },
 	progressLabel: {
 		fontFamily: "GloriaHallelujah",
 		fontSize: 18,
@@ -207,8 +211,6 @@ const styles = StyleSheet.create({
 	statusSelected: {
 		backgroundColor: Colors.light.accent3,
 	},
-
-	// dateText: { fontFamily: "GloriaHallelujah", fontSize: 12 },
 
 	deleteButtonText: {
 		fontFamily: "GloriaHallelujah",

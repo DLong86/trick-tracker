@@ -11,16 +11,29 @@ import {
 	View,
 } from "react-native";
 import SlidingSearch from "./SlidingSearch";
+import SortFilter from "./SortFilter";
+
+type Props = {
+	onAddTrick: (name: string, video: string) => void;
+	searchQuery: string;
+	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+	showFocusedOnly: boolean;
+	setShowFocusedOnly: React.Dispatch<React.SetStateAction<boolean>>;
+	// sortBy: "dateAsc" | "dateDesc" | "nameAsc" | "nameDesc";
+	// setSortBy: React.Dispatch<
+	// 	React.SetStateAction<"dateAsc" | "dateDesc" | "nameAsc" | "nameDesc">
+	// >;
+};
 
 export default function AddTrickSection({
 	onAddTrick,
 	searchQuery,
 	setSearchQuery,
-}: {
-	onAddTrick: (name: string, video: string) => void;
-	searchQuery: string;
-	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-}) {
+	showFocusedOnly,
+	setShowFocusedOnly,
+}: // sortBy,
+// setSortBy,
+Props) {
 	const router = useRouter();
 	const [visible, setVisible] = useState(false);
 	// const [text, setText] = useState("");
@@ -40,7 +53,7 @@ export default function AddTrickSection({
 
 	const inputHeight = slideAnim.interpolate({
 		inputRange: [0, 1],
-		outputRange: [0, 120], // Adjust this if you add more content
+		outputRange: [0, 170], // Adjust this if you add more content
 	});
 
 	// const handleAdd = () => {
@@ -104,9 +117,46 @@ export default function AddTrickSection({
 						/> */}
 					</View>
 				</TouchableOpacity>
+				{/* <View style={styles.sortFilterRow}>
+					<TouchableOpacity
+						onPress={() => setShowFocusedOnly(!showFocusedOnly)}
+					>
+						<Text style={styles.sortFilterText}>
+							{showFocusedOnly ? "Show All Tricks" : "Show Focused Only"}
+						</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						onPress={() => {
+							setSortBy((prev) => {
+								if (prev === "dateDesc") return "dateAsc";
+								if (prev === "dateAsc") return "nameAsc";
+								if (prev === "nameAsc") return "nameDesc";
+								return "dateDesc";
+							});
+						}}
+					>
+						<Text style={styles.sortFilterText}>
+							Sort:{" "}
+							{sortBy === "dateDesc"
+								? "Date ↓"
+								: sortBy === "dateAsc"
+								? "Date ↑"
+								: sortBy === "nameAsc"
+								? "Name A→Z"
+								: "Name Z→A"}
+						</Text>
+					</TouchableOpacity>
+				</View> */}
 				<SlidingSearch
 					searchQuery={searchQuery}
 					setSearchQuery={setSearchQuery}
+				/>
+				<SortFilter
+					showFocusedOnly={showFocusedOnly}
+					setShowFocusedOnly={setShowFocusedOnly}
+					// sortBy={sortBy}
+					// setSortBy={setSortBy}
 				/>
 			</Animated.View>
 		</View>
@@ -145,7 +195,7 @@ const styles = StyleSheet.create({
 		fontFamily: "GloriaHallelujah",
 	},
 	addButton: {
-		backgroundColor: Colors.light.accent1,
+		backgroundColor: Colors.light.accent3,
 		padding: 10,
 		borderRadius: 8,
 		alignItems: "center",
@@ -164,5 +214,16 @@ const styles = StyleSheet.create({
 		width: 20,
 		height: 20,
 		marginLeft: 8,
+	},
+	sortFilterRow: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		marginBottom: 10,
+		paddingHorizontal: 4,
+	},
+	sortFilterText: {
+		fontFamily: "GloriaHallelujah",
+		fontSize: 14,
+		color: "#333",
 	},
 });

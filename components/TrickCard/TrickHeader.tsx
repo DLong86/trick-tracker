@@ -25,9 +25,6 @@ export default function TrickHeader({ trick }: { trick: Trick }) {
 			<View>
 				<Text style={styles.progressLabel}>{trick.progress}</Text>
 			</View>
-			<Text style={styles.dateText}>
-				Added: {new Date(trick.dateAdded).toLocaleDateString()}
-			</Text>
 		</View>
 	);
 }
@@ -69,5 +66,4 @@ const styles = StyleSheet.create({
 		color: "#222",
 		marginBottom: 4,
 	},
-	dateText: { fontFamily: "GloriaHallelujah", fontSize: 12 },
 });

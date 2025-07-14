@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	modal: {
-		backgroundColor: Colors.light.accent2,
+		backgroundColor: Colors.light.background2,
 		padding: 16,
 		borderRadius: 10,
 		width: "80%",

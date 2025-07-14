@@ -1,5 +1,13 @@
+import { Colors } from "@/constants/Colors";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+	Animated,
+	Image,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import type { Trick } from "../../types/Trick";
 import ExpandableContent from "./ExpandableContent";
 import ProgressIcon from "./ProgressIcon";
@@ -9,6 +17,7 @@ type Props = {
 	trick: Trick;
 	tricks: Trick[];
 	setTricks: React.Dispatch<React.SetStateAction<Trick[]>>;
+	toggleFocus: (id: number) => void;
 };
 
 const progressIcons: { [key in Trick["progress"]]: any } = {
@@ -19,7 +28,12 @@ const progressIcons: { [key in Trick["progress"]]: any } = {
 	"on lock": require("../../assets/images/trophy.png"),
 };
 
-export default function TrickCard({ trick, setTricks, tricks }: Props) {
+export default function TrickCard({
+	trick,
+	setTricks,
+	tricks,
+	toggleFocus,
+}: Props) {
 	const [expanded, setExpanded] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
@@ -79,12 +93,30 @@ export default function TrickCard({ trick, setTricks, tricks }: Props) {
 			<View
 				style={[
 					styles.card,
+					trick.focused && styles.focusedCard,
 					// trick.landed && styles.landed,
 					// { transform: [{ rotate: `${trick.tilt || 0}deg` }] },
 				]}
 			>
 				<ProgressIcon trick={trick} scaleAnim={scaleAnim} />
 				<TrickHeader key={trick.id} trick={trick} />
+
+				<TouchableOpacity
+					onPress={() => toggleFocus(trick.id)}
+					style={styles.focusButton}
+				>
+					<Image
+						source={
+							trick.focused
+								? require("../../assets/images/filled-star.png")
+								: require("../../assets/images/empty-star.png")
+						}
+						style={styles.focusIcon}
+					/>
+					<Text style={styles.focusText}>
+						{trick.focused ? "Focused" : "Focus"}
+					</Text>
+				</TouchableOpacity>
 
 				{expanded && (
 					<ExpandableContent
@@ -116,5 +148,29 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.3,
 		shadowRadius: 4,
 		position: "relative",
+	},
+
+	focusedCard: {
+		backgroundColor: "#f3e5f5",
+	},
+	focusButton: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 4,
+		padding: 0,
+		alignSelf: "flex-start",
+	},
+
+	focusIcon: {
+		width: 30,
+		height: 30,
+		tintColor: Colors.light.accent1,
+		flexShrink: 1,
+	},
+
+	focusText: {
+		fontSize: 20,
+		fontFamily: "GloriaHallelujah",
+		color: Colors.light.accent1,
 	},
 });
