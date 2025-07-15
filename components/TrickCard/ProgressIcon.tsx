@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 		height: 35,
 		top: 0,
 		right: 0,
+		tintColor: "#222",
 	},
 	label: {
 		fontFamily: "GloriaHallelujah",

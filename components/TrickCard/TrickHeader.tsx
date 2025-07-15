@@ -8,6 +8,10 @@ export default function TrickHeader({ trick }: { trick: Trick }) {
 		<View>
 			<Text style={[styles.title]}>{trick.name}</Text>
 
+			<View>
+				<Text style={styles.progressLabel}>{trick.progress}</Text>
+			</View>
+
 			{trick.video ? (
 				<View style={styles.linkRow}>
 					<Image
@@ -22,27 +26,18 @@ export default function TrickHeader({ trick }: { trick: Trick }) {
 					</Text>
 				</View>
 			) : null}
-			<View>
-				<Text style={styles.progressLabel}>{trick.progress}</Text>
-			</View>
 		</View>
 	);
 }
 
 const styles = StyleSheet.create({
-	// headerRow: {
-	// 	flexDirection: "row",
-	// 	// alignItems: "center",
-	// 	justifyContent: "space-between",
-	// },
 	title: {
 		fontFamily: "PermanentMarker",
-		fontSize: 24,
+		fontSize: 28,
 		color: "#222",
 		transform: [{ rotate: "-2deg" }],
-		// marginBottom: 8,
 		paddingTop: 0,
-		marginTop: 0,
+		marginTop: -6,
 	},
 
 	linkRow: {
@@ -61,7 +56,7 @@ const styles = StyleSheet.create({
 		height: 20,
 	},
 	progressLabel: {
-		fontFamily: "GloriaHallelujah",
+		fontFamily: "PermanentMarker",
 		fontSize: 18,
 		color: "#222",
 		marginBottom: 4,

@@ -19,10 +19,6 @@ type Props = {
 	setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
 	showFocusedOnly: boolean;
 	setShowFocusedOnly: React.Dispatch<React.SetStateAction<boolean>>;
-	// sortBy: "dateAsc" | "dateDesc" | "nameAsc" | "nameDesc";
-	// setSortBy: React.Dispatch<
-	// 	React.SetStateAction<"dateAsc" | "dateDesc" | "nameAsc" | "nameDesc">
-	// >;
 };
 
 export default function AddTrickSection({
@@ -31,13 +27,9 @@ export default function AddTrickSection({
 	setSearchQuery,
 	showFocusedOnly,
 	setShowFocusedOnly,
-}: // sortBy,
-// setSortBy,
-Props) {
+}: Props) {
 	const router = useRouter();
 	const [visible, setVisible] = useState(false);
-	// const [text, setText] = useState("");
-	// const [videoLink, setVideoLink] = useState("");
 
 	const slideAnim = useRef(new Animated.Value(0)).current;
 
@@ -53,16 +45,8 @@ Props) {
 
 	const inputHeight = slideAnim.interpolate({
 		inputRange: [0, 1],
-		outputRange: [0, 170], // Adjust this if you add more content
+		outputRange: [0, 170], // adjusst to add more links, buttons etc
 	});
-
-	// const handleAdd = () => {
-	// 	if (text.trim()) {
-	// 		onAddTrick(text, videoLink);
-	// 		setText("");
-	// 		setVideoLink("");
-	// 	}
-	// };
 
 	return (
 		<View style={styles.container}>
@@ -84,70 +68,18 @@ Props) {
 						/>
 					</View>
 				)}
-				{/* <Text style={styles.toggleText}>
-					{visible ? "close" : "add tricks"}
-				</Text> */}
 			</TouchableOpacity>
 
 			<Animated.View style={[styles.inner, { height: inputHeight }]}>
-				{/* <TextInput
-					placeholder="Trick Name"
-					value={text}
-					onChangeText={setText}
-					style={styles.input}
-					placeholderTextColor={"#666"}
-				/>
-				<TextInput
-					placeholder="Video URL"
-					value={videoLink}
-					onChangeText={setVideoLink}
-					style={styles.input}
-					placeholderTextColor={"#666"}
-				/> */}
-
 				<TouchableOpacity
 					style={styles.addButton}
 					onPress={() => router.push("/addTrick")}
 				>
 					<View style={styles.buttonContent}>
 						<Text style={styles.addButtonText}>add a trick</Text>
-						{/* <Image
-							source={require("../../assets/images/right-arrow.png")}
-							style={styles.icon}
-						/> */}
 					</View>
 				</TouchableOpacity>
-				{/* <View style={styles.sortFilterRow}>
-					<TouchableOpacity
-						onPress={() => setShowFocusedOnly(!showFocusedOnly)}
-					>
-						<Text style={styles.sortFilterText}>
-							{showFocusedOnly ? "Show All Tricks" : "Show Focused Only"}
-						</Text>
-					</TouchableOpacity>
 
-					<TouchableOpacity
-						onPress={() => {
-							setSortBy((prev) => {
-								if (prev === "dateDesc") return "dateAsc";
-								if (prev === "dateAsc") return "nameAsc";
-								if (prev === "nameAsc") return "nameDesc";
-								return "dateDesc";
-							});
-						}}
-					>
-						<Text style={styles.sortFilterText}>
-							Sort:{" "}
-							{sortBy === "dateDesc"
-								? "Date ↓"
-								: sortBy === "dateAsc"
-								? "Date ↑"
-								: sortBy === "nameAsc"
-								? "Name A→Z"
-								: "Name Z→A"}
-						</Text>
-					</TouchableOpacity>
-				</View> */}
 				<SlidingSearch
 					searchQuery={searchQuery}
 					setSearchQuery={setSearchQuery}
@@ -155,8 +87,6 @@ Props) {
 				<SortFilter
 					showFocusedOnly={showFocusedOnly}
 					setShowFocusedOnly={setShowFocusedOnly}
-					// sortBy={sortBy}
-					// setSortBy={setSortBy}
 				/>
 			</Animated.View>
 		</View>
@@ -169,7 +99,6 @@ const styles = StyleSheet.create({
 		marginTop: 6,
 	},
 	toggleButton: {
-		// flexDirection: "row",
 		backgroundColor: Colors.light.accent1,
 		padding: 8,
 		borderRadius: 8,

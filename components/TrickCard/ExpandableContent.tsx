@@ -147,7 +147,6 @@ const styles = StyleSheet.create({
 		fontFamily: "GloriaHallelujah",
 		fontSize: 18,
 		color: "#222",
-		// color: Colors.light.accent1,
 	},
 
 	row: {
@@ -167,7 +166,6 @@ const styles = StyleSheet.create({
 
 	notesText: {
 		fontFamily: "PermanentMarker",
-		// color: "#222",
 		paddingHorizontal: 4,
 		fontSize: 16,
 		color: Colors.light.accent1,
@@ -232,7 +230,6 @@ const styles = StyleSheet.create({
 
 	modalButtons: {
 		flexDirection: "row",
-		// justifyContent: "space-between",
 		gap: 6,
 		alignItems: "center",
 	},

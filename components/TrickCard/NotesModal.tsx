@@ -40,7 +40,6 @@ export default function NoteModal({
 						// borderRadius: 10,
 					}}
 				>
-					{/* <Text style={styles.title}>Notes</Text> */}
 					<TextInput
 						multiline
 						numberOfLines={4}
@@ -71,7 +70,6 @@ const styles = StyleSheet.create({
 	overlay: {
 		flex: 1,
 		backgroundColor: "rgba(0,0,0,0.6)",
-		// justifyContent: "center",
 		paddingTop: 110,
 		alignItems: "center",
 	},
@@ -109,7 +107,6 @@ const styles = StyleSheet.create({
 		borderRadius: 6,
 		padding: 2,
 		paddingHorizontal: 10,
-		// marginRight: 6,
 		flexDirection: "row",
 		alignItems: "center",
 	},

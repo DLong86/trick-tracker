@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-		// backgroundColor: "#fafabe",
 	},
 	tappableContent: {
 		alignItems: "center",
@@ -62,12 +61,10 @@ const styles = StyleSheet.create({
 		fontSize: 36,
 		marginBottom: 10,
 		color: "#222",
-		// color: Colors.light.accent1,
 	},
 	enterText: {
 		fontFamily: "GloriaHallelujah",
 		fontSize: 22,
-		// marginBottom: 20,
 		color: Colors.light.accent1,
 	},
 });

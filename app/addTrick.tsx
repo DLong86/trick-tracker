@@ -31,7 +31,7 @@ export default function AddTrickScreen() {
 	}, []);
 
 	const handleAddTrick = async () => {
-		if (!name.trim()) return; // don't add empty name
+		if (!name.trim()) return;
 
 		const existing: Trick[] = await loadTricks();
 
@@ -101,10 +101,8 @@ const styles = StyleSheet.create({
 	container: {
 		flexGrow: 1,
 		padding: 16,
-		// backgroundColor: Colors.light.background,
 	},
 	customHeader: {
-		// backgroundColor: Colors.light.background,
 		paddingTop: 4,
 		paddingBottom: 10,
 		fontSize: 28,

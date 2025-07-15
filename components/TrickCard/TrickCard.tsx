@@ -2,8 +2,8 @@ import { Colors } from "@/constants/Colors";
 import React, { useEffect, useRef, useState } from "react";
 import {
 	Animated,
-	Image,
 	StyleSheet,
+	Switch,
 	Text,
 	TouchableOpacity,
 	View,
@@ -55,13 +55,6 @@ export default function TrickCard({
 		]).start();
 	}, [trick.progress]);
 
-	// const toggle = (key: keyof Trick) => {
-	// 	const updated = tricks.map((t) =>
-	// 		t.id === trick.id ? { ...t, [key]: !t[key] } : t
-	// 	);
-	// 	setTricks(updated);
-	// };
-
 	const updateProgress = (newStatus: Trick["progress"]) => {
 		const updated = tricks.map((t) =>
 			t.id === trick.id ? { ...t, progress: newStatus } : t
@@ -90,33 +83,21 @@ export default function TrickCard({
 
 	return (
 		<TouchableOpacity onPress={() => setExpanded(!expanded)} activeOpacity={1}>
-			<View
-				style={[
-					styles.card,
-					trick.focused && styles.focusedCard,
-					// trick.landed && styles.landed,
-					// { transform: [{ rotate: `${trick.tilt || 0}deg` }] },
-				]}
-			>
+			<View style={[styles.card]}>
 				<ProgressIcon trick={trick} scaleAnim={scaleAnim} />
 				<TrickHeader key={trick.id} trick={trick} />
 
-				<TouchableOpacity
-					onPress={() => toggleFocus(trick.id)}
-					style={styles.focusButton}
-				>
-					<Image
-						source={
-							trick.focused
-								? require("../../assets/images/filled-star.png")
-								: require("../../assets/images/empty-star.png")
-						}
-						style={styles.focusIcon}
-					/>
+				<View style={styles.focusSwitchContainer}>
 					<Text style={styles.focusText}>
-						{trick.focused ? "Focused" : "Focus"}
+						{trick.focused ? "focused" : "set focus"}
 					</Text>
-				</TouchableOpacity>
+					<Switch
+						value={trick.focused}
+						onValueChange={() => toggleFocus(trick.id)}
+						thumbColor={trick.focused ? "pink" : "fff"}
+						trackColor={{ true: Colors.light.accent1, false: "#f4f3f4" }}
+					/>
+				</View>
 
 				{expanded && (
 					<ExpandableContent
@@ -142,17 +123,14 @@ const styles = StyleSheet.create({
 		borderRadius: 12,
 		marginBottom: 16,
 		borderWidth: 2,
-		borderColor: "#000", // bold black border
-		shadowColor: "#000",
+		borderColor: "#222",
+		shadowColor: "#222",
 		shadowOffset: { width: 2, height: 2 },
 		shadowOpacity: 0.3,
 		shadowRadius: 4,
 		position: "relative",
 	},
 
-	focusedCard: {
-		backgroundColor: "#f3e5f5",
-	},
 	focusButton: {
 		flexDirection: "row",
 		alignItems: "center",
@@ -169,8 +147,15 @@ const styles = StyleSheet.create({
 	},
 
 	focusText: {
-		fontSize: 20,
+		fontSize: 18,
 		fontFamily: "GloriaHallelujah",
-		color: Colors.light.accent1,
+		color: "222",
+	},
+
+	focusSwitchContainer: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginTop: 10,
 	},
 });

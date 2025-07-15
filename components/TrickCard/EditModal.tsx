@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
 	overlay: {
 		flex: 1,
 		backgroundColor: "rgba(0,0,0,0.6)",
-		// justifyContent: "center",
 		paddingTop: 110,
 		alignItems: "center",
 	},
