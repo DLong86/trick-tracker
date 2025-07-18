@@ -1,50 +1,48 @@
-# Welcome to your Expo app 👋
+# Trick Tracker 🛹
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A fun, visual mobile app to help skateboarders track the tricks they're learning, attempting, or have landed.
+This app is simple to use, and has a fun DIY aesthetic.
 
-## Get started
+## Live Demo
 
-1. Install dependencies
+Scan with Expo Go or click to open:
+[Open in Expo Go](https://expo.dev/accounts/dlong86/projects/trick-tracker/updates/5526df9d-eb19-4eb5-b427-8d793190486b)
 
-   ```bash
-   npm install
-   ```
+## Features
 
-2. Start the app
+- Add tricks with status: "Not started", "attempted", "trying", "landed", "on lock"
+- Track progress visually with doodle, hand-drawn styled icons and text
+- Expand trick cards for notes and settings
+- Filter and sort
+- Save data locally (persistent between sessions)
 
-   ```bash
-   npx expo start
-   ```
+## Tech Stack
 
-In the output, you'll find options to open the app in a
+- React Native with Typescript
+- AsyncStorage for persistent local data
+- Hand drawn icons from FlatIcons
+- Animated UI with React Native Reanimated and LayoutAnimation
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Installation
 
 ```bash
-npm run reset-project
+git clone https://github.com/DLong86/trick-tracker
+cd trick-tracker
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 📸 Screenshots
 
-## Learn more
+<img src="assets/screenshots/IMG_9875.PNG" width="200" /> <img src="assets/screenshots/IMG_9876.PNG" width="200" />  
+<img src="assets/screenshots/IMG_9877.PNG" width="200" /> <img src="assets/screenshots/IMG_9878.PNG" width="200" />
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🤝 Contributing
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Contributions, issues, and feature requests are welcome.  
+Feel free to fork the repo and submit a pull request.  
+For major changes, please open an issue first to discuss what you’d like to change.
 
-## Join the community
+## 📄 License
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
